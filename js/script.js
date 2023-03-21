@@ -10,6 +10,7 @@ canvas.height = document.documentElement.clientHeight;
 
 const wastedElement = document.querySelector('.wasted');
 const scoreElement = document.querySelector('#score');
+const audioElement = document.querySelector('.music-button');
 
 let player;
 let projectiles = [];
@@ -19,12 +20,14 @@ let score = 0;
 let animationId;
 let spawnIntervalId;
 let countIntervalId;
+let audioStart = false;
 
 startGame();
 
 function startGame() {
     init();
     animate();
+    musicPlayback();
     spawnEnemies();
 }
 
@@ -123,4 +126,21 @@ function removeProjectileByIndex(index) {
 function increaseScore() {
     score += 250;
     scoreElement.innerHTML = score;
+}
+
+function musicPlayback() {
+    const audio = new Audio("../music/hotline_miami_04. M.O.O.N - Crystals.mp3");
+    audio.loop = true;
+    audio.volume = 0.2;
+    audioElement.addEventListener('click', () => {
+        if (audioStart === false) {
+            audioStart = true;
+            audioElement.textContent = "Mute Music";
+            audio.play();
+        } else {
+            audioStart = false;
+            audioElement.textContent = "Play Music";
+            audio.pause();
+        }
+    })
 }

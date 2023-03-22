@@ -24,7 +24,7 @@ let countIntervalId;
 let audioStart = false;
 
 startGameElement.addEventListener('click', () => {
-    startGameElement.style.display = 'none';
+    startGameElement.style.display = "none";
     startGame();
 })
 

@@ -8,6 +8,7 @@ const context = canvas.getContext("2d");
 canvas.width = document.documentElement.clientWidth;
 canvas.height = document.documentElement.clientHeight;
 
+const startGameElement = document.querySelector('.start-button')
 const wastedElement = document.querySelector('.wasted');
 const scoreElement = document.querySelector('#score');
 const audioElement = document.querySelector('.music-button');
@@ -22,12 +23,17 @@ let spawnIntervalId;
 let countIntervalId;
 let audioStart = false;
 
-startGame();
+startGameElement.addEventListener('click', () => {
+    startGameElement.style.display = 'none';
+    startGame();
+})
+
+musicPlayback();
 
 function startGame() {
     init();
     animate();
-    musicPlayback();
+    // musicPlayback();
     spawnEnemies();
 }
 
@@ -79,9 +85,17 @@ function animate() {
     const isGameOver = enemies.some(checkHittingPlayer);
     if (isGameOver) {
         wastedElement.style.display = "block";
-        clearInterval(spawnIntervalId);
-        clearInterval(countIntervalId);
-        cancelAnimationFrame(animationId);
+        statsReset();
+        startGameElement.style.display = 'block';
+        startGameElement.addEventListener('click', () => {
+            statsReset();
+            wastedElement.style.display = "none";
+            startGameElement.style.display = 'none';
+            enemies = [];
+            score = 0;
+            scoreElement.innerHTML = score;
+            startGame();
+        })
     }
 
     particles.forEach(particle => particle.update());
@@ -135,12 +149,18 @@ function musicPlayback() {
     audioElement.addEventListener('click', () => {
         if (audioStart === false) {
             audioStart = true;
-            audioElement.textContent = "Mute Music";
+            audioElement.textContent = "Mute";
             audio.play();
         } else {
             audioStart = false;
-            audioElement.textContent = "Play Music";
+            audioElement.textContent = "Music";
             audio.pause();
         }
     })
+}
+
+function statsReset() {
+    clearInterval(spawnIntervalId);
+    clearInterval(countIntervalId);
+    cancelAnimationFrame(animationId);
 }

@@ -83,3 +83,15 @@ body {
     background-color: #231f20;
     cursor: pointer;
 }
+
+.start-button {
+    position: fixed;
+    top: max(10px, 1vmax);
+    right: max(500px, 50vmax);
+    font-family: Arial, Helvetica, sans-serif;
+    font-size: max(26px, 2.6vmax);
+    font-weight: bold;
+    color: #961e25;
+    background-color: #231f20;
+    cursor: pointer;
+}
